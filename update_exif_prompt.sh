@@ -29,17 +29,23 @@ fi
 
 echo
 echo "Updating EXIF dates in: $TARGET_DIR"
+echo "Target file types: JPG, JPEG, TIFF, PNG, HEIC, BMP, GIF"
 echo "Setting DateTimeOriginal, CreateDate, and ModifyDate to: $NEW_DATE"
 echo
 
-# Recursively find JPG/JPEG files and update EXIF data
-find "$TARGET_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) | while read -r file; do
-  echo "Processing: $file"
-  exiftool \
-    "-DateTimeOriginal=$NEW_DATE" \
-    "-CreateDate=$NEW_DATE" \
-    "-ModifyDate=$NEW_DATE" \
-    -overwrite_original "$file"
+# File extensions to include (case-insensitive)
+EXTENSIONS="jpg jpeg tif tiff png heic heif bmp gif"
+
+# Loop through each extension and find/update matching files
+for EXT in $EXTENSIONS; do
+  find "$TARGET_DIR" -type f -iname "*.$EXT" | while read -r file; do
+    echo "Processing: $file"
+    exiftool \
+      "-DateTimeOriginal=$NEW_DATE" \
+      "-CreateDate=$NEW_DATE" \
+      "-ModifyDate=$NEW_DATE" \
+      -overwrite_original "$file"
+  done
 done
 
 echo
