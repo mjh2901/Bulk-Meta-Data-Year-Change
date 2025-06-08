@@ -1,29 +1,44 @@
-# Bulk-Meta-Data-Year-Change
-Script asks for a year then a directory and updates the meta data to reflect a new capture your based on input
+# 🕰️ Update EXIF Dates for Scanned Photos
 
- How to Use
+This script updates the EXIF metadata of image files to reflect the **original date the photo was taken**, rather than the date the photo was scanned or digitized.
 
-    Save this script as update_exif_prompt.sh
+It's ideal for photographers, archivists, and data hoarders who want accurate historical metadata for their scanned image collections.
 
-    Make it executable:
+---
 
-chmod +x update_exif_prompt.sh
+## 📜 Features
 
-Run it:
+- Prompts for:
+  - ✅ Year photo was taken (e.g., `1987`)
+  - ✅ Target directory containing the images
+- Recursively processes all supported image files
+- Updates the following EXIF fields:
+  - `DateTimeOriginal`
+  - `CreateDate`
+  - `ModifyDate`
+- Overwrites original metadata (no `.jpg_original` files)
 
-./update_exif_prompt.sh
+---
 
-It will:
+## 📂 Supported File Types
 
-    Ask for the year
+- `.jpg`, `.jpeg`
+- `.tif`, `.tiff`
+- `.png`
+- `.heic`, `.heif`
+- `.bmp`
+- `.gif`
 
-    Ask for the directory
+> Note: Some formats like `.png` and `.gif` don't support full EXIF metadata; in such cases, ExifTool will use alternative metadata tags (e.g. XMP or IPTC).
 
-    Process all .jpg/.jpeg files recursively
+---
 
+## 🛠 Requirements
 
- Notes
+- [ExifTool](https://exiftool.org)
 
-    exiftool can handle EXIF-compatible formats like .tif, .heic, and .png, but not all formats support all date fields (e.g., .png has no native EXIF, but ExifTool stores it in XMP or IPTC).
+### Install ExifTool
 
-    -overwrite_original avoids creating backup files. Remove it if you want to keep .original versions.
+**macOS (Homebrew):**
+```bash
+brew install exiftool
