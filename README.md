@@ -20,3 +20,10 @@ It will:
     Ask for the directory
 
     Process all .jpg/.jpeg files recursively
+
+
+ Notes
+
+    exiftool can handle EXIF-compatible formats like .tif, .heic, and .png, but not all formats support all date fields (e.g., .png has no native EXIF, but ExifTool stores it in XMP or IPTC).
+
+    -overwrite_original avoids creating backup files. Remove it if you want to keep .original versions.
